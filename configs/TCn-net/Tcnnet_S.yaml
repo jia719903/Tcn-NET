@@ -1,0 +1,55 @@
+CUDNN:
+  BENCHMARK: true
+  DETERMINISTIC: false
+  ENABLED: true
+GPUS: (0,)
+OUTPUT_DIR: 'output'
+LOG_DIR: 'log'
+WORKERS: 0
+PRINT_FREQ: 10
+
+DATASET:
+  DATASET: camvid
+  ROOT: data/
+  TEST_SET: 'list/verse/val.lst'
+  TRAIN_SET: 'list/verse/train.lst'
+  NUM_CLASSES: 2
+MODEL:
+  NAME: pidnet_l
+  NUM_OUTPUTS: 2
+  PRETRAINED: "pretrained_models/cityscapes/PIDNet_M_Cityscapes_test.pt"
+LOSS:
+  USE_OHEM: true
+  OHEMTHRES: 0.9
+  OHEMKEEP: 131072
+  BALANCE_WEIGHTS: [0.4, 1.0]
+  SB_WEIGHTS: 1.0
+TRAIN:
+  IMAGE_SIZE:
+  - 1280
+  - 512
+  BASE_SIZE: 1280
+  BATCH_SIZE_PER_GPU: 16
+  SHUFFLE: true
+  BEGIN_EPOCH: 0
+  END_EPOCH: 4000
+  RESUME: False
+  OPTIMIZER: sgd
+  LR: 0.001
+  WD: 0.0005
+  MOMENTUM: 0.9
+  NESTEROV: false
+  FLIP: true
+  MULTI_SCALE: true
+  IGNORE_LABEL: 255
+  SCALE_FACTOR: 16
+TEST:
+  IMAGE_SIZE:
+  - 1280
+  - 512
+  BASE_SIZE: 1280
+  BATCH_SIZE_PER_GPU: 8
+  FLIP_TEST: false
+  MULTI_SCALE: false
+  MODEL_FILE: '..\best.pt'
+  OUTPUT_INDEX: 1
